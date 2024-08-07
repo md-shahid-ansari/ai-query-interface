@@ -1,0 +1,100 @@
+/* Ensure the body takes up the full viewport height */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background: #343a40;
+}
+
+/* Chat interface takes up the full height of the viewport with a max-width */
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width of the viewport */
+    max-width: 1000px; /* Maximum width for larger screens */
+    min-width: 240px; /* Minimum width for smaller screens */
+    margin: 0 auto; /* Center the component horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #343a40; /* Dark mode background */
+    color: #f8f9fa; /* Dark mode text color */
+    overflow: hidden; /* Hide overflow to keep the layout clean */
+}
+
+/* Chat window flexes to take up available space */
+.chat-window {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #495057; /* Dark mode chat window */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style for chat messages */
+.chat-message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 80%; /* Maximum width for the messages */
+    word-wrap: break-word; /* Ensure text wraps to the next line */
+    display: inline-block; /* Display messages inline */
+    text-align: left; /* Align text to the left */
+}
+
+.chat-message.user {
+    background-color: #007bff; /* User message background color */
+    color: white;
+    margin-left: auto; /* Align user messages to the right */
+}
+
+.chat-message.bot {
+    background-color: #6c757d; /* Bot message background color */
+    color: white;
+    margin-right: auto; /* Align bot messages to the left */
+}
+
+/* Input area at the bottom */
+.input-area {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end; /* Align items at the bottom */
+}
+
+.form-control {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    resize: none; /* Disable manual resize */
+    overflow: hidden; /* Hide overflow initially */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    height: 40px; /* Fixed height for textarea */
+    max-height: 200px;
+    
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    height: 40px; /* Fixed height for the button */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.btn-toggle {
+    display: none; /* Hide the toggle button */
+}
+
+/* Wrapper for messages to ensure they are displayed in separate lines */
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+}
