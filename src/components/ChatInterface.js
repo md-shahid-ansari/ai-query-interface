@@ -4,6 +4,9 @@ import './ChatInterface.css';
 
 function ChatInterface() {
     const [query, setQuery] = useState('');
+    const [context, setContext] = useState('');
+    const [tempContext, setTempContext] = useState('');
+    const [isContextPopupVisible, setIsContextPopupVisible] = useState(false);
     const [messages, setMessages] = useState([
         { text: 'How may I help you?', sender: 'bot' }
     ]);
@@ -37,7 +40,7 @@ function ChatInterface() {
         setQuery('');
 
         try {
-            const result = await axios.post('http://localhost:5000/query', { query });
+            const result = await axios.post('http://localhost:5000/query', { query, context }); 
             const botMessage = { text: result.data.response || 'Sorry, I didn\'t understand that.', sender: 'bot' };
             setMessages((prevMessages) => [...prevMessages, botMessage]);
         } catch (error) {
@@ -47,13 +50,22 @@ function ChatInterface() {
         }
     };
 
-    const handleChange = (e) => {
-        setQuery(e.target.value);
+    const handleContextSave = () => {
+        setContext(tempContext);
+        setIsContextPopupVisible(false);
+    };
+
+    const handleContextCancel = () => {
+        setTempContext(context);
+        setIsContextPopupVisible(false);
     };
 
     return (
         <div className="chat-interface">
-            <h1>AI-Powered Data Query Interface</h1>
+            <div className='header'>
+                <h1>AI-Powered Data Query Interface</h1>
+                <button className='btn btn-primary' onClick={() => setIsContextPopupVisible(true)}>Context</button>
+            </div>
             <div className="chat-window" ref={chatWindowRef}>
                 {messages.map((msg, index) => (
                     <div key={index} className={`message-wrapper ${msg.sender}`}>
@@ -67,7 +79,7 @@ function ChatInterface() {
                 <textarea
                     ref={textareaRef}
                     value={query}
-                    onChange={handleChange}
+                    onChange={(e) => setQuery(e.target.value)}
                     placeholder="Enter your query..."
                     className="form-control"
                 />
@@ -75,6 +87,26 @@ function ChatInterface() {
                     Send
                 </button>
             </div>
+            {isContextPopupVisible && (
+                <div className="context-popup active">
+                    <div className="context-popup-content">
+                        <textarea
+                            value={tempContext}
+                            onChange={(e) => setTempContext(e.target.value)}
+                            placeholder="Enter your context..."
+                            className="context-textarea"
+                        />
+                        <div className="context-popup-buttons">
+                            <button className="btn btn-primary" onClick={handleContextSave}>
+                                Save
+                            </button>
+                            <button className="btn btn-primary" onClick={handleContextCancel}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

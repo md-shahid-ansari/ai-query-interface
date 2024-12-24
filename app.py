@@ -12,17 +12,9 @@ nlp = pipeline("question-answering")
 def query():
     data = request.get_json()
     user_query = data.get('query')
+    context = data.get('context')
 
     try:
-        # Dummy context for the purpose of example
-        context = (
-            "We store detailed records of customer transactions, including purchase history, "
-            "billing information, and customer support interactions. Our database also includes "
-            "information on inventory levels, supplier details, and product specifications. "
-            "Clients frequently inquire about their recent transactions, current account status, "
-            "order history, and specific product details. Additionally, clients might ask about "
-            "available inventory, the status of their support tickets, or upcoming promotions."
-        )
         # Use the model to process the query
         response = nlp(question=user_query, context=context)
         response_text = response['answer']
